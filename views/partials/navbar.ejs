@@ -1,0 +1,39 @@
+  <!-- Kelompok kiri: logo + menu -->
+  <div class="flex items-center gap-6">
+    <img src="assets/images/LOGO.png" alt="Logo" class="h-10">
+    <ul class="flex gap-6 font-medium text-white">
+      <li><a href="/" class="font-bold inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Beranda</a></li>
+      <li><a href="/portofolio"class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Portofolio</a></li>
+      <li><a href="/layanan"class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Layanan</a></li>
+      <li><a href="/produk"class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Produk</a></li>
+    </ul>
+  </div>
+
+<!-- Login -->
+<div class="flex items-center gap-4">
+  <% if (isLoggedIn) { %>
+    
+    <% if (userRole === 'admin') { %>
+      <!-- Ikon Dashboard (admin) -->
+      <a href="/admin/pesanan" title="Dashboard" class="inline-flex items-center justify-center bg-black rounded-full w-10 h-10 hover:scale-105 hover:-skew-x-6 transition duration-200">
+        <img src="/assets/images/sidebar/admin-icon.svg" class="w-5 h-5" alt="Dashboard">
+      </a>
+    <% } else { %>
+      <!-- Ikon Riwayat (hanya untuk user biasa) -->
+      <a href="/riwayat" title="Riwayat" class="inline-flex items-center justify-center bg-black rounded-full w-10 h-10 hover:scale-105 hover:-skew-x-6 transition duration-200">
+        <img src="/assets/images/sidebar/product-icon.svg" class="w-5 h-5" alt="Riwayat">
+      </a>
+    <% } %>
+
+    <!-- Tombol Logout -->
+    <a href="/logout" class="bg-black text-white px-6 py-2 rounded-full text-sm border border-black transition hover:bg-white hover:text-black">
+      Logout
+    </a>
+
+  <% } else { %>
+    <!-- Tombol Login -->
+    <a href="/login" class="bg-black text-white px-6 py-2 rounded-full text-sm border border-black transition hover:bg-white hover:text-black">
+      Login/Sign Up
+    </a>
+  <% } %>
+</div>

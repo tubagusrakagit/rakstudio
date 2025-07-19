@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Konfirmasi Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cover bg-no-repeat bg-center min-h-screen flex items-center justify-center" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <div class="absolute top-6 left-6">
+    <a href="/produk/<%= produk._id %>" class="bg-black text-white px-5 py-1.5 rounded-full text-sm">Back</a>
+  </div>
+
+  <div class="bg-white bg-opacity-90 max-w-md w-full mx-6 rounded-2xl p-8 shadow-lg">
+    <h1 class="text-2xl font-bold text-center mb-6">Konfirmasi Pesanan</h1>
+    <hr class="mb-6">
+
+    <!-- Bukan form lagi -->
+    <input type="hidden" id="produkId" value="<%= produk._id %>">
+    <input type="hidden" id="userName" value="<%= userName %>">
+    <input type="hidden" id="userEmail" value="<%= userEmail %>">
+
+    <div class="space-y-4">
+      <div class="flex justify-between items-center">
+        <label class="font-semibold">Produk:</label>
+        <input type="text" readonly value="<%= produk.nama %>" class="bg-gray-100 border rounded px-3 py-1.5 w-48 text-sm text-right" />
+      </div>
+      <div class="flex justify-between items-center">
+        <label class="font-semibold">Harga:</label>
+        <input type="text" readonly value="Rp <%= produk.harga.toLocaleString('id-ID') %>" class="bg-gray-100 border rounded px-3 py-1.5 w-48 text-sm text-right" />
+      </div>
+    </div>
+
+    <hr class="my-6">
+
+    <div class="flex justify-between items-center mb-6">
+      <span class="font-semibold">Total Harga:</span>
+      <span class="text-gray-700 font-medium">Rp <%= produk.harga.toLocaleString('id-ID') %></span>
+    </div>
+
+    <button id="pay-button" class="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition">
+      Bayar
+    </button>
+  </div>
+
+  <!-- Snap.js & handler -->
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<%= clientKey %>"></script>
+  <script>
+    document.getElementById('pay-button').addEventListener('click', function () {
+      snap.pay('<%= token %>', {
+        onSuccess: function(result){
+          const produkId = result.order_id.split('-')[1];
+          window.location.href = "/sukses?produkId=" + produkId;
+        },
+        onPending: function(result){
+          const produkId = result.order_id.split('-')[1];
+          window.location.href = "/sukses?produkId=" + produkId;
+        },
+        onError: function(result){
+          alert("Pembayaran gagal");
+        },
+        onClose: function(){
+          alert("Transaksi dibatalkan.");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

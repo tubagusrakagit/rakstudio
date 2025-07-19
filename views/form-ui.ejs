@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form UI Design</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Baris Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-cover bg-center min-h-screen flex items-center justify-center font-sans" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <div class="bg-white rounded-2xl border border-gray-300 p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-2">Form Pemesanan UI Design</h1>
+    <p class="text-sm text-gray-500 text-center mb-6">Isi formulir untuk memesan layanan UI design sesuai kebutuhanmu</p>
+
+    <form action="/konfirmasi-ui" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <input type="hidden" name="jenisLayanan" value="ui-design">
+
+      <div>
+        <label class="block text-sm font-medium">Nama Lengkap</label>
+        <input type="text" name="nama" required class="w-full border rounded px-3 py-2 text-sm" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Email</label>
+        <input type="email" name="email" required class="w-full border rounded px-3 py-2 text-sm" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Pilih Paket UI</label>
+        <select name="paket" required class="w-full border rounded px-3 py-2 text-sm">
+          <option value="Basic">Basic</option>
+          <option value="Standard">Standard</option>
+          <option value="Premium">Premium</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Deskripsi Kebutuhan</label>
+        <textarea name="deskripsi" rows="4" required class="w-full border rounded px-3 py-2 text-sm"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium">Upload Referensi (opsional)</label>
+        <input type="file" name="referensi" class="text-sm" />
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition">Kirim Pesanan</button>
+    </form>
+  </div>
+</body>
+</html>

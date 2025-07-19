@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Pemesanan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cover bg-no-repeat bg-center min-h-screen flex items-center justify-center" style="background-image: url('assets/images/GRAPHIC.jpg');">
+
+  <div class="bg-white rounded-2xl border border-gray-300 p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center mb-2">Form Pemesanan</h1>
+    <p class="text-sm text-gray-500 text-center mb-6">Isi formulir berikut untuk memesan layanan desain sesuai kebutuhan anda</p>
+
+    <form action="/konfirmasi-layanan" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <input type="hidden" name="jenisLayanan" value="design-graphic">
+      <div>
+        <label class="block text-sm font-medium">Nama Lengkap</label>
+        <input id="nama" type="text" name="nama" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Email</label>
+        <input id="email" type="email" name="email" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Pilih Paket Desain</label>
+        <select id="paket" name="paket" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+          <option value="Basic">Basic</option>
+          <option value="Standard">Standard</option>
+          <option value="Premium">Premium</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Deskripsi Kebutuhan</label>
+        <textarea id="deskripsi" name="deskripsi" rows="4" required class="w-full border border-gray-300 rounded px-3 py-2 text-sm"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Upload File Referensi</label>
+        <input type="file" name="referensi" class="text-sm" />
+      </div>
+      <div class="pt-2">
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-full transition">Kirim Pesanan</button>
+      </div>
+      <div class="text-center pt-2">
+        <a href="/layanan" class="text-sm text-gray-500 hover:underline">Batal</a>
+      </div>
+    </form>
+  </div>
+
+
+</body>
+</html>
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detail Pesanan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex bg-gray-100 min-h-screen font-sans">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-black text-white flex flex-col justify-between py-6 px-4">
+    <div>
+      <div class="text-2xl font-bold mb-8 pl-2">RakStudio</div>
+      <nav class="space-y-2">
+        <a href="/admin/pesanan" class="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/order-icon.svg" alt="Pesanan" class="w-4 h-4"> Pesanan
+        </a>
+        <a href="/admin/portofolio" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/tag-check.svg" alt="Portofolio" class="w-4 h-4"> Portofolio
+        </a>
+        <a href="/admin/produk" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/product-icon.svg" alt="Produk" class="w-4 h-4"> Produk
+        </a>
+      </nav>
+    </div>
+    <div class="space-y-2">
+      <a href="/" class="block bg-gray-800 text-center py-2 rounded text-sm">Beranda</a>
+      <a href="#" class="block border border-white text-center py-2 rounded text-sm">Log out</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-10">
+    <h2 class="text-gray-500 text-sm">Selamat Datang Admin!</h2>
+    <h1 class="text-3xl font-bold mb-6">Lihat Detail Pesanan</h1>
+
+    <div class="bg-white rounded-2xl p-8 max-w-3xl mx-auto shadow-sm text-sm">
+      <h3 class="text-xl font-semibold text-center mb-6">Detail Pesanan</h3>
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6">
+        <div class="font-medium">Nama Lengkap:</div>
+        <div><%= pesanan.nama %></div>
+
+        <div class="font-medium">Email:</div>
+        <div><%= pesanan.email %></div>
+
+        <div class="font-medium">Paket:</div>
+        <div><%= pesanan.paket %></div>
+
+        <div class="font-medium">Catatan Klien:</div>
+        <div>
+          <textarea class="w-full border border-gray-300 rounded p-2 text-sm" rows="3" readonly><%= pesanan.deskripsi %></textarea>
+        </div>
+
+        <div class="font-medium">File Referensi:</div>
+        <div>
+          <% if (pesanan.fileReferensi) { %>
+            <a href="/uploads/<%= pesanan.fileReferensi %>" class="text-blue-600 underline">
+              download="<%= pesanan.fileReferensi  %>"
+              Unduh (<%= pesanan.fileReferensi %>)
+            </a>
+          <% } else { %>
+            <span class="text-gray-400 italic">Tidak ada file referensi</span>
+          <% } %>
+        </div>
+
+        <div class="font-medium">Tanggal Pesanan:</div>
+        <div><%= pesanan.tanggal.toLocaleDateString('id-ID') %></div>
+
+        <div class="font-medium">Status Sekarang:</div>
+        <div><%= pesanan.status %></div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href="/admin/pesanan" class="bg-blue-600 text-white px-6 py-2 rounded-full text-sm hover:bg-blue-700 transition">
+          Kembali ke Daftar
+        </a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

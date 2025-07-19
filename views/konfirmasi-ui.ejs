@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Konfirmasi UI Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-center min-h-screen flex items-center justify-center font-sans" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg">
+    <h2 class="text-3xl font-bold text-center mb-2">Konfirmasi Pemesanan UI</h2>
+    <hr class="my-4" />
+      <div class="mb-4 flex justify-between">
+        <label class="font-medium">Email:</label>
+        <span class="text-sm"><%= data.email %></span>
+      </div>
+
+      <div class="mb-4 flex justify-between">
+        <label class="font-medium">Paket:</label>
+        <span class="text-sm capitalize"><%= data.paket %></span>
+      </div>
+
+      <div class="mb-4 flex justify-between">
+        <label class="font-medium">Jenis Layanan:</label>
+        <span class="text-sm">UI Design</span>
+      </div>
+
+      <div class="mb-6">
+        <label class="font-medium block mb-2">Catatan:</label>
+        <div class="bg-gray-100 p-3 rounded text-sm"><%= data.deskripsi %></div>
+      </div>
+
+      <div class="flex justify-between items-center mb-6">
+        <span class="font-medium text-lg">Total Harga:</span>
+        <span class="text-lg font-bold">
+          <% if (data.paket === 'Basic') { %> Rp 250.000
+          <% } else if (data.paket === 'Standard') { %> Rp 350.000
+          <% } else if (data.paket === 'Premium') { %> Rp 500.000
+          <% } %>
+        </span>
+      </div>
+      <button id="pay-button" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Bayar</button>
+
+      <a href="/form-ui" class="block text-center text-gray-500 hover:text-blue-600 mt-4">Kembali & Ubah</a>
+  </div>
+
+<!-- Trigger Snap JS -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<%= clientKey %>"></script>
+<script>
+  document.getElementById('pay-button').addEventListener('click', function () {
+    snap.pay('<%= token %>', {
+      onSuccess: function(result){
+        window.location.href = "/sukses-ui";
+      },
+      onPending: function(result){
+        window.location.href = "/sukses-ui";
+      },
+      onError: function(result){
+        alert("Pembayaran gagal");
+      },
+      onClose: function(){
+        alert("Transaksi dibatalkan.");
+      }
+    });
+  });
+</script>
+</body>
+</html>

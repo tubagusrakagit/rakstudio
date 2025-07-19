@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Header -->
+  <header class="bg-cover bg-[position:50%_10%] h-[450px]" style="background-image: url('assets/images/background.svg'); height: 450px;">
+    <div class="bg-white bg-opacity-0 h-full w-full flex flex-col items-center justify-center text-center px-6">
+      <nav class="absolute top-4 left-4 right-4 flex justify-between items-center">
+  <!--Navbar-->  
+  <%- include('partials/navbar')  %>
+
+</nav>
+<!--Judul Section-->
+<div class="text-white pt-32 pb-20 text-center px-6">
+    <h1 class="text-6xl font-bold">Portofolio</h1>
+    <p class="text-sm opacity-100 mt-2">Kumpulan hasil desain terbaik dari RakStudio</p>
+</div>
+</header>
+
+<!-- Masonry Grid -->
+<section class="px-6 pb-24 pt-16 max-w-6xl mx-auto">
+  <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+    <% portofolio.forEach(item => { %>
+      <!-- Background bulat di belakang card -->
+      <div class="rounded-3xl bg-gray-100 p-2 break-inside-avoid">
+        <!-- Card -->
+        <div class="relative overflow-hidden rounded-2xl bg-white shadow group transition-all duration-300">
+          <img src="/uploads/<%= item.gambar %>" alt="<%= item.judul %>" 
+               class="w-full max-h-72 object-cover h-[250px] sm:h-auto transition-transform duration-300 transform group-hover:scale-105">
+          
+          <div class="p-4">
+            <h3 class="text-sm font-semibold text-gray-800 truncate"><%= item.judul %></h3>
+          </div>
+
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 bg-black bg-opacity-60 text-white opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-center p-4 backdrop-blur-sm">
+            <p><%= item.deskripsi %></p>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>

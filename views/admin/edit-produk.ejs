@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex bg-gray-100 min-h-screen font-sans">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-black text-white flex flex-col justify-between py-6 px-4">
+    <div>
+      <div class="text-2xl font-bold mb-8 pl-2">RakStudio</div>
+      <nav class="space-y-2">
+        <a href="/admin/pesanan" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/order-icon.svg" alt="Pesanan" class="w-4 h-4"> Pesanan
+        </a>
+        <a href="/admin/portofolio" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/tag-check.svg" alt="Portofolio" class="w-4 h-4"> Portofolio
+        </a>
+        <a href="/admin/produk" class="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/product-icon.svg" alt="Produk" class="w-4 h-4"> Produk
+        </a>
+      </nav>
+    </div>
+    <div class="space-y-2">
+      <a href="/" class="block bg-gray-800 text-center py-2 rounded text-sm">Beranda</a>
+      <a href="#" class="block border border-white text-center py-2 rounded text-sm">Log out</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-10">
+    <h2 class="text-gray-500 text-sm">Selamat Datang Admin!</h2>
+    <h1 class="text-3xl font-bold mb-6">Edit Produk</h1>
+
+    <div class="bg-white p-6 rounded-xl max-w-xl mx-auto shadow-sm">
+      <form action="/admin/produk/<%= produk._id %>/edit" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <input type="text" name="nama" value="<%= produk.nama %>" required placeholder="Nama Produk" class="w-full border px-3 py-2 rounded text-sm" />
+        <input type="number" name="harga" value="<%= produk.harga %>" required placeholder="Harga" class="w-full border px-3 py-2 rounded text-sm" />
+        <textarea name="deskripsi" rows="3" class="w-full border px-3 py-2 rounded text-sm" placeholder="Deskripsi"><%= produk.deskripsi %></textarea>
+        <select name="kategori" required class="w-full border px-3 py-2 rounded text-sm">
+          <option value="Logo" <%= produk.kategori === 'Logo' ? 'selected' : '' %>>Logo</option>
+          <option value="Kemasan" <%= produk.kategori === 'Kemasan' ? 'selected' : '' %>>Kemasan</option>
+          <option value="Poster" <%= produk.kategori === 'Poster' ? 'selected' : '' %>>Poster</option>
+        </select>
+        <div>
+          <label class="block text-sm mb-1">Gambar Produk (Opsional)</label>
+          <input type="file" name="gambar" class="text-sm" />
+          <% if (produk.gambar) { %>
+            <div class="mt-2">
+              <img src="/uploads/<%= produk.gambar %>" alt="Gambar Produk" class="w-32 rounded shadow">
+            </div>
+          <% } %>
+        </div>
+        <div class="flex justify-end gap-2">
+          <a href="/admin/produk" class="border px-4 py-2 rounded text-sm">Batal</a>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

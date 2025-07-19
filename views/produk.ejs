@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produk Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-white text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="bg-transparent absolute top-0 left-0 right-0 px-6 py-4 flex justify-between items-center z-10">
+    <div class="flex items-center gap-6">
+      <img src="/assets/images/LOGO.png" alt="Logo" class="h-10">
+      <ul class="flex gap-6 font-medium text-white">
+        <li><a href="/" class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Beranda</a></li>
+      <li><a href="/portofolio"class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Portofolio</a></li>
+      <li><a href="/layanan"class="font-medium inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Layanan</a></li>
+      <li><a href="/produk"class="font-bold inline-block hover:scale-105 hover:-skew-x-6 transition duration-200">Produk</a></li>
+      
+      </ul>
+    </div>
+    <!-- Login -->
+<div class="flex items-center gap-4">
+  <% if (isLoggedIn) { %>
+    
+    <% if (userRole === 'admin') { %>
+      <!-- Ikon Dashboard (admin) -->
+      <a href="/admin/pesanan" title="Dashboard" class="inline-flex items-center justify-center bg-black rounded-full w-10 h-10 hover:scale-105 hover:-skew-x-6 transition duration-200">
+        <img src="/assets/images/sidebar/admin-icon.svg" class="w-5 h-5" alt="Dashboard">
+      </a>
+    <% } else { %>
+      <!-- Ikon Riwayat (hanya untuk user biasa) -->
+      <a href="/riwayat" title="Riwayat" class="inline-flex items-center justify-center bg-black rounded-full w-10 h-10 hover:scale-105 hover:-skew-x-6 transition duration-200">
+        <img src="/assets/images/sidebar/product-icon.svg" class="w-5 h-5" alt="Riwayat">
+      </a>
+    <% } %>
+
+    <!-- Tombol Logout -->
+    <a href="/logout" class="bg-black text-white px-6 py-2 rounded-full text-sm border border-black transition hover:bg-white hover:text-black">
+      Logout
+    </a>
+
+  <% } else { %>
+    <!-- Tombol Login -->
+    <a href="/login" class="bg-black text-white px-6 py-2 rounded-full text-sm border border-black transition hover:bg-white hover:text-black">
+      Login/Sign Up
+    </a>
+  <% } %>
+</div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-cover bg-center h-[300px] flex items-center justify-center" style="background-image: url('/assets/images/background.svg');">
+    <h1 class="text-white text-4xl font-bold">Produk Digital</h1>
+  </header>
+
+  <!-- Daftar Produk -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <% produk.forEach(item => { %>
+        <div class="border rounded-xl overflow-hidden shadow-sm hover:scale-105 transition duration-300">
+          <img src="/uploads/<%= item.gambar %>" alt="Produk" class="h-48 w-full object-cover">
+          <div class="p-4 space-y-2">
+            <h3 class="font-semibold text-lg"><%= item.nama %></h3>
+            <p class="text-sm text-gray-600">Rp <%= item.harga.toLocaleString('id-ID') %></p>
+            <p class="text-xs text-gray-500"><%= item.deskripsi.slice(0, 60) %>...</p>
+            <a href="/produk/<%= item._id %>" class="inline-block mt-2 bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700">Lihat Detail</a>
+            <% if (isLoggedIn) { %>
+              <li><a href="/riwayat">Riwayat</a></li>
+            <% } %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+  
+
+</body>
+</html>

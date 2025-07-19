@@ -1,0 +1,22 @@
+{
+  "name": "rakstudio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "midtrans-client": "^1.4.3",
+    "mongoose": "^8.16.3",
+    "multer": "^2.0.1"
+  }
+}

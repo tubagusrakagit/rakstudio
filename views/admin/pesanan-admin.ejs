@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pesanan Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex bg-gray-100 min-h-screen font-sans">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-black text-white flex flex-col justify-between py-6 px-4">
+    <div>
+      <div class="text-2xl font-bold mb-8 pl-2">RakStudio</div>
+      <nav class="space-y-2">
+        <a href="/admin/pesanan" class="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/order-icon.svg" alt="Pesanan" class="w-4 h-4"> Pesanan
+        </a>
+        <a href="/admin/portofolio" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/tag-check.svg" alt="Portofolio" class="w-4 h-4"> Portofolio
+        </a>
+        <a href="/admin/produk" class="flex items-center gap-2 hover:bg-gray-800 px-4 py-2 rounded text-sm font-medium">
+          <img src="/assets/images/sidebar/product-icon.svg" alt="Produk" class="w-4 h-4"> Produk
+        </a>
+      </nav>
+    </div>
+    <div class="space-y-2">
+      <a href="/" class="block bg-gray-800 text-center py-2 rounded text-sm">Beranda</a>
+      <a href="#" class="block border border-white text-center py-2 rounded text-sm">Log out</a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-10">
+    <h2 class="text-gray-500 text-sm">Selamat Datang Admin!</h2>
+    <h1 class="text-3xl font-bold mb-6">Pesanan</h1>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm">
+      <h3 class="text-xl font-semibold mb-4">Daftar Pesanan Masuk</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="text-left px-4 py-2">Nama</th>
+              <th class="text-left px-4 py-2">Email</th>
+              <th class="text-left px-4 py-2">Layanan</th>
+              <th class="text-left px-4 py-2">Jenis</th>
+              <th class="text-left px-4 py-2">Status</th>
+              <th class="text-left px-4 py-2">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% pesanan.forEach((item, index) => { %>
+              <tr class="border-t">
+                <td class="px-4 py-2"><%= item.nama %></td>
+                <td class="px-4 py-2"><%= item.email %></td>
+                <td class="px-4 py-2">
+                  <% if(item.paket === 'Basic') { %>
+                    <span class="bg-blue-500 text-white px-2 py-1 text-xs rounded">Basic</span>
+                  <% } else if(item.paket === 'Standard') { %>
+                    <span class="bg-pink-500 text-white px-2 py-1 text-xs rounded">Standard</span>
+                  <% } else if(item.paket === 'Premium') { %>
+                    <span class="bg-yellow-400 text-black px-2 py-1 text-xs rounded">Premium</span>
+                  <% } %>
+                </td>
+                <td class="px-4 py-2">
+                  <% if (item.jenisLayanan === 'ui-design') { %>
+                    <span class="bg-purple-200 text-purple-800 px-2 py-1 text-xs rounded">UI Design</span>
+                  <% } else { %>
+                    <span class="bg-green-200 text-green-800 px-2 py-1 text-xs rounded">Graphic Design</span>
+                  <% } %>
+              </td>
+                <td class="px-4 py-2">
+                  <% if(item.status === 'Baru') { %>
+                    <span class="bg-blue-100 text-blue-700 px-2 py-1 text-xs rounded">Baru</span>
+                  <% } else { %>
+                    <span class="bg-blue-200 text-blue-800 px-2 py-1 text-xs rounded"><%= item.status %></span>
+                  <% } %>
+                </td>
+          
+                <td class="px-4 py-2 flex gap-2">
+                  <a href="/admin/pesanan/<%= item._id %>" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded">Lihat</a>
+                  <button class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded" onclick="openModal('<%= item._id %>')">Perbarui</button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <!-- Modal -->
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+          <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 class="text-lg font-semibold mb-4">Perbarui Status</h3>
+            <form id="update-form" method="POST">
+              <input type="hidden" name="_id" id="pesanan-id">
+              <select name="status" class="w-full border rounded px-3 py-2 mb-4">
+                <option value="Baru">Baru</option>
+                <option value="Diproses">Diproses</option>
+                <option value="Selesai">Selesai</option>
+              </select>
+              <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded">Batal</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Popup Placeholder (bisa ditambahkan nanti) -->
+  <script>
+  function openModal(id) {
+    const form = document.getElementById('update-form');
+    form.action = `/admin/pesanan/${id}/update`;
+    document.getElementById('modal').classList.remove('hidden');
+    document.getElementById('pesanan-id').value = id; // kalau hidden input dibutuhkan
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+  }
+</script>
+
+</body>
+</html>
+

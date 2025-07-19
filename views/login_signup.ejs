@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cover bg-no-repeat bg-center min-h-screen flex items-center justify-center" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <div class="relative bg-white rounded-2xl shadow-lg w-full max-w-4xl overflow-x-hidden">
+    <div id="formWrapper" class="w-[200%] flex transition-transform duration-500">
+
+      <!-- Signup -->
+      <div class="w-1/2 p-10 flex flex-col md:flex-row items-center gap-6">
+        <div class="w-full md:w-1/2 p-1">
+          <div class="rounded-xl bg-gray-200 shadow-sm h-[450px] bg-cover bg-center" style="background-image: url('/assets/images/grd_login.png');"></div>
+        </div>
+        <div class="w-full md:w-1/2 pt-6">
+          <h2 class="text-2xl text-center font-bold mb-2">Daftar</h2>
+          <h3 class="text-base text-center text-gray-500 mb-4">Mulai Buat Akun Anda</h3>
+          
+          <% if (errorSignup) { %>
+            <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded text-sm text-center"><%= errorSignup %></div>
+          <% } %>
+
+          <form method="POST" action="/signup">
+            <input type="text" name="nama" placeholder="Nama Lengkap" class="w-full border rounded px-3 py-2 mb-3 text-sm" required />
+            <input type="email" name="email" placeholder="Email" class="w-full border rounded px-3 py-2 mb-3 text-sm" required />
+            <input type="password" name="password" placeholder="Password" class="w-full border rounded px-3 py-2 mb-3 text-sm" required minlength="6" autocomplete="off" />
+            <input type="password" name="konfirmasi" placeholder="Konfirmasi Password" class="w-full border rounded px-3 py-2 mb-6 text-sm" required />
+            <button class="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition">Daftar</button>
+          </form>
+
+          <p class="text-sm mt-4 text-center">Sudah punya akun? 
+            <button onclick="showLogin()" class="text-blue-600 hover:underline font-medium">Masuk</button>
+          </p>
+          <div class="mt-4 text-center">
+            <a href="/" class="text-gray-500 text-sm hover:text-blue-600">Kembali ke Beranda</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login -->
+      <div class="w-1/2 p-10 flex flex-col md:flex-row items-center gap-6">
+        <div class="w-full md:w-1/2">
+          <div class="rounded-xl bg-gray-200 h-[450px] bg-cover bg-center" style="background-image: url('/assets/images/grd_login.png');"></div>
+        </div>
+        <div class="w-full md:w-1/2 px-6 py-10">
+          <h2 class="text-2xl font-bold mb-2">Masuk</h2>
+
+          <% if (errorLogin) { %>
+            <div class="bg-red-100 text-red-700 px-4 py-2 mb-4 rounded text-sm text-center"><%= errorLogin %></div>
+          <% } %>
+
+          <form method="POST" action="/login">
+            <input type="email" name="email" placeholder="Email" class="w-full border rounded px-3 py-2 mb-4 text-sm" required />
+            <input type="password" name="password" placeholder="Password" class="w-full border rounded px-3 py-2 mb-4 text-sm" required minlength="6" autocomplete="off" />
+            <button class="w-full bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition">Login</button>
+          </form>
+
+          <p class="text-sm mt-4 text-center">Belum punya akun? 
+            <button onclick="showSignup()" class="text-blue-600 hover:underline font-medium">Daftar</button>
+          </p>
+          <div class="mt-4 text-center">
+            <a href="/" class="text-gray-500 text-sm hover:text-blue-600">Kembali ke Beranda</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const formWrapper = document.getElementById('formWrapper');
+
+    function showSignup() {
+      formWrapper.style.transform = "translateX(0%)";
+    }
+
+    function showLogin() {
+      formWrapper.style.transform = "translateX(-50%)";
+    }
+
+    <% if (typeof show === 'undefined' || show === 'login') { %>
+      showLogin();
+    <% } else { %>
+      showSignup();
+    <% } %>
+  </script>
+
+</body>
+</html>
+

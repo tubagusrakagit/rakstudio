@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= produk.nama %> | Detail Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cover bg-no-repeat bg-center min-h-screen" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <!-- Back button -->
+  <div class="p-6">
+    <a href="/produk" class="bg-black text-white px-5 py-1.5 rounded-full text-sm">Kembali</a>
+  </div>
+
+  <!-- Main content -->
+  <section class="max-w-6xl mx-auto bg-white bg-opacity-90 rounded-xl p-6 md:p-10 flex flex-col md:flex-row gap-10 items-center shadow-lg">
+    
+    <!-- Gambar Produk -->
+    <div class="flex-1 w-full">
+      <img src="/uploads/<%= produk.gambar %>" alt="Gambar Produk" class="w-full h-[350px] md:h-[450px] object-cover rounded-xl" />
+    </div>
+
+    <!-- Detail Produk -->
+    <div class="flex-1 w-full space-y-4">
+      <h1 class="text-2xl font-bold"><%= produk.nama %></h1>
+      <p class="text-sm text-gray-500"><%= produk.kategori %></p>
+      <p class="text-xl font-semibold text-gray-900">Rp <%= produk.harga.toLocaleString('id-ID') %></p>
+
+      <div class="text-sm">
+        <h2 class="font-semibold">Deskripsi:</h2>
+        <p class="text-gray-600"><%= produk.deskripsi %></p>
+      </div>
+
+      <hr class="my-4" />
+
+      <div class="text-sm space-y-1">
+        <div class="flex justify-between">
+          <span class="font-semibold">File:</span>
+          <span class="text-gray-600">ZIP</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold">Kategori:</span>
+          <span class="text-gray-600"><%= produk.kategori %></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold">Tanggal Upload:</span>
+          <span class="text-gray-600"><%= produk.tanggal.toLocaleDateString('id-ID') %></span>
+        </div>
+      </div>
+
+      <!-- Tombol -->
+      <div class="pt-6">
+        <a href="/konfirmasi-produk/<%= produk._id %>" class="block md:inline-block w-full md:w-auto text-center bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 hover:-skew-x-6 transition duration-200">
+          Beli Sekarang
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>

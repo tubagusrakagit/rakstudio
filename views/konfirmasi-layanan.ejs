@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Konfirmasi Pemesanan Layanan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-cover bg-no-repeat bg-center min-h-screen flex items-center justify-center" style="background-image: url('/assets/images/GRAPHIC.jpg');">
+
+  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg">
+    <h2 class="text-3xl font-bold text-center mb-4">Konfirmasi Pesanan</h2>
+    <hr class="mb-6" />
+
+    
+      <div class="space-y-4 text-sm text-gray-700">
+        <div class="flex justify-between">
+          <span class="font-medium">Nama:</span>
+          <span><%= data.nama %></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Email:</span>
+          <span><%= data.email %></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Paket:</span>
+          <span><%= data.paket %></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="font-medium">Harga:</span>
+          <span>
+            <% if (data.paket === 'Basic') { %>Rp 150.000<% } %>
+            <% if (data.paket === 'Standard') { %>Rp 250.000<% } %>
+            <% if (data.paket === 'Premium') { %>Rp 400.000<% } %>
+          </span>
+        </div>
+        <div>
+          <span class="font-medium block mb-1">Deskripsi:</span>
+          <p class="bg-gray-100 border rounded px-3 py-2"><%= data.deskripsi %></p>
+        </div>
+      </div>
+
+      <hr class="my-6" />
+
+      <div class="flex justify-between font-semibold text-lg mb-6">
+        <span>Total:</span>
+        <span>
+          <% if (data.paket === 'Basic') { %>Rp 150.000<% } %>
+          <% if (data.paket === 'Standard') { %>Rp 250.000<% } %>
+          <% if (data.paket === 'Premium') { %>Rp 400.000<% } %>
+        </span>
+      </div>
+
+      <div class="space-y-4">
+        <button id="pay-button" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">Bayar</button>
+        <a href="/form-pemesanan" class="block text-center text-sm text-gray-500 hover:text-blue-600">Kembali & Ubah</a>
+      </div>
+  </div>
+  
+  <!-- SNAP JS -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<%= clientKey %>"></script>
+<script>
+  document.getElementById('pay-button').addEventListener('click', function () {
+    snap.pay('<%= token %>', {
+      onSuccess: function(result){
+        window.location.href = "/sukses-layanan";
+      },
+      onPending: function(result){
+        window.location.href = "/sukses-layanan";
+      },
+      onError: function(result){
+        alert("Pembayaran gagal");
+      },
+      onClose: function(){
+        alert("Transaksi dibatalkan.");
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
