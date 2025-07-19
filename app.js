@@ -10,6 +10,7 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const midtransRoutes = require('./midtrans');
 const midtransClient = require('midtrans-client');
+
 app.use(midtransRoutes);
 app.use(session({
   secret: 'rakstudio-secret',
@@ -733,6 +734,7 @@ app.post('/admin/pesanan/:id/update', async (req, res) => {
 });
 
 // ---------------- LISTEN ----------------
-app.listen(3000, () => {
-  console.log('✅ Server aktif di http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server aktif di http://localhost:${PORT}`);
 });
