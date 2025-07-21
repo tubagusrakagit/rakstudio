@@ -8,10 +8,10 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: 'user' }
 });
 
-// Pastikan tidak hash dua kali
+// Hash Password
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  if (this.password.startsWith('$2b$')) return next(); // sudah di-hash
+  if (this.password.startsWith('$2b$')) return next(); // Sudah di Hash
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
