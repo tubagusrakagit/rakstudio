@@ -43,6 +43,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended: true }));
 
+function requireLogin(req, res, next) {
+  if (!req.session.userId) {
+    return res.redirect('/login');
+  }
+  next();
+}
+
 // Middleware global untuk semua EJS
 app.use((req, res, next) => {
   res.locals.isLoggedIn = !!req.session.userId;
@@ -69,6 +76,7 @@ app.get('/', async (req, res) => {
   }
 });
 
+
 app.get('/konfirmasi', (req, res) => {
   res.sendFile(path.join(__dirname, 'konfirmasi.html'));
 });
@@ -76,7 +84,7 @@ app.get('/konfirmasi', (req, res) => {
 const User = require('./models/User');
 
 // ---------------- ROUTING LAYANAN ----------------
-app.get('/layanan', (req, res) => {
+app.get('/layanan', requireLogin, (req, res) => {
   res.render('layanan'); // tidak perlu .ejs, otomatis dicari dari /views
 });
 
@@ -84,7 +92,7 @@ app.get('/layanan', (req, res) => {
 const Portofolio = require('./models/Portofolio');
 
 // Halaman user portofolio
-app.get('/portofolio', async (req, res) => {
+app.get('/portofolio', requireLogin, async (req, res) => {
   try {
     const portofolio = await Portofolio.find().sort({ tanggal: -1 });
 
@@ -306,7 +314,7 @@ app.post('/pesan', upload.single('referensi'), async (req, res) => {
   }
 });
 
-app.get('/form-pemesanan', (req, res) => {
+app.get('/form-pemesanan', requireLogin, (req, res) => {
   res.render('form-pemesanan', {
     error: null
   });
@@ -351,7 +359,7 @@ app.post('/pesan', upload.single('referensi'), async (req, res) => {
   }
 });
 
-app.get('/form-pemesanan', (req, res) => {
+app.get('/form-pemesanan', requireLogin, (req, res) => {
   res.render('form-pemesanan', {
     error: null
   });
@@ -423,7 +431,7 @@ app.post('/konfirmasi-layanan', upload.single('referensi'), async (req, res) => 
 
 
 
-// ---------------- ROUTE SUKSES LAYANAN ----------------
+
 // ---------------- ROUTE SUKSES LAYANAN ----------------
 app.get('/sukses-layanan', async (req, res) => {
   const data = req.session.tempPesananLayanan;
@@ -455,7 +463,7 @@ app.get('/sukses-layanan', async (req, res) => {
 });
 
 // ---------------- ROUTE PEMESANAN UI ----------------
-app.get('/form-ui', (req, res) => {
+app.get('/form-ui', requireLogin, (req, res) => {
   res.render('form-ui');
 });
 
@@ -557,7 +565,7 @@ app.get('/produk', async (req, res) => {
 });
 
 // ---------------- Detail Produk ----------------
-app.get('/produk/:id', async (req, res) => {
+app.get('/produk/:id', requireLogin, async (req, res) => {
   try {
     const produk = await Product.findById(req.params.id);
     if (!produk) return res.status(404).send('Produk tidak ditemukan');
